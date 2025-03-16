@@ -136,7 +136,7 @@ function updateDisplay() {
         remainingDisplay.classList.add('hidden');
         goalReachedDisplay.children[0].innerHTML = displayedValue;
     }
-    if (displayPercentage) {
+    if (displayPercentage && goal !== 0) {
         const percentage = +((displayedValue / goal) * 100).toFixed(2);
         percentageDisplay.classList.remove('hidden');
         percentageDisplay.children[0].innerHTML = percentage + '%';
