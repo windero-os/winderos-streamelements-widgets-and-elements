@@ -1,0 +1,37 @@
+* {
+    font-family: {{googleFontFamily}};
+    font-weight: {{googleFontFamilyWeight}};
+    font-size: {{fontSize}}px;
+    color: {{fontColor}};    
+    text-shadow: {{textShadow}};
+}
+.multi-type-goal__main-container{
+    padding: 4px;
+    display: flex;
+    gap: calc({{fontSize}}px *0.25);
+    height: calc({{fontSize}}px * 1.25);
+}
+.multi-type-goal__goal-display {
+    color: {{fontColorGoal}}
+}
+.multi-type-goal__reached-display{
+    color: {{fontColorReachedValue}};
+}
+.multi-type-goal__percentaged-display{
+    color: {{fontColorPercentage}};
+}
+.multi-type-goal__goal-reached-divider{
+    color: {{fontColorDivider}};
+}
+.hidden{
+    display: none;
+}
+
+.leading-image{
+    width: {{fontSize}}px;
+    height: {{fontSize}}px;
+}
+
+.goal-finished-background{
+    background-color: {{goalFinishedColor}};
+}

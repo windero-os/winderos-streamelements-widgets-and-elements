@@ -1,0 +1,46 @@
+<link
+    href="https://fonts.googleapis.com/css?family={googleFontFamily}:{googleFontFamilySize}"
+    rel="stylesheet" />
+<div
+    id="multi-type-goal__main-container"
+    class="multi-type-goal__main-container">
+    <img
+        id="leading-image"
+        class="leading-image"
+        src="{{displayStartingImg}}" />
+    <span id="goal-reached-display">
+        <span
+            id="current-displayed-value"
+            class="multi-type-goal__reached-display"></span>
+        <span
+            id="goal-reached-divider"
+            class="multi-type-goal__goal-reached-divider">
+            {{displayGoalAndReachedDivider}}
+        </span>
+        <span
+            id="goal-displayed-value"
+            class="multi-type-goal__goal-display">
+            {{goal}}{{displayGoalCurrency}}
+        </span>
+    </span>
+    <span
+        id="goal-remaining-display"
+        class="multi-type-goal__goal-display">
+        {{displayRemainingText}}
+        <span
+            id="goal-remaining-value"
+            class="multi-type-goal__goal-display">
+            {{displayGoalCurrency}}
+        </span>
+    </span>
+    <span id="percentage-display-outside">
+        (
+        <span
+            id="percentage-display"
+            class="multi-type-goal__percentaged-display">
+            %
+        </span>
+        )
+    </span>
+    <span id="goal-text"> {{displayGoalText}} </span>
+</div>

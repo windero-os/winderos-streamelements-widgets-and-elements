@@ -1,0 +1,231 @@
+{
+    "manualInput": {
+        "type": "number",
+        "label": "Change the goal value by",
+        "value": 0,
+        "group": "Manual management"
+    },
+    "manualButton": {
+        "type": "button",
+        "label": "Apply manual input",
+        "value": "manualButton",
+        "group": "Manual management"
+    },
+    "manualOverflowButton": {
+        "type": "button",
+        "label": "Apply Overflow",
+        "value": "manualOverflowButton",
+        "group": "Manual management"
+    },
+    "resetManualInputButton": {
+        "type": "button",
+        "label": "Reset all manual input",
+        "value": "resetManualInputButton",
+        "group": "Manual management"
+    },
+    "manualClearOverflowButton": {
+        "type": "button",
+        "label": "Remove saved overflow",
+        "value": "manualClearOverflowButton",
+        "group": "Manual management"
+    },
+    "manualClearStoreButton": {
+        "type": "button",
+        "label": "Reset the saved data for widget",
+        "value": "manualClearStoreButton",
+        "group": "Manual management"
+    },
+    "googleFontFamily": {
+        "type": "googleFont",
+        "label": "Google font family",
+        "value": "Montserrat",
+        "group": "Typography"
+    },
+    "googleFontFamilyWeight": {
+        "type": "dropdown",
+        "label": "Text font weight",
+        "value": "400",
+        "options": {
+            "100": "Thin (100)",
+            "300": "Light (300)",
+            "400": "Regular (400)",
+            "500": "Medium (500)",
+            "700": "Bold (700)",
+            "900": "Black (900)"
+        },
+        "group": "Typography"
+    },
+    "fontSize": {
+        "type": "number",
+        "label": "Font size",
+        "value": 16,
+        "min": 12,
+        "max": 100,
+        "step": 1,
+        "group": "Typography"
+    },
+    "fontColor": {
+        "type": "colorpicker",
+        "label": "Font color",
+        "value": "rgb(255, 255, 255)",
+        "group": "Typography"
+    },
+    "fontColorGoal": {
+        "type": "colorpicker",
+        "label": "Font color for the goal",
+        "value": "rgb(255, 255, 255)",
+        "group": "Typography"
+    },
+    "fontColorReachedValue": {
+        "type": "colorpicker",
+        "label": "Font color for the reached value",
+        "value": "rgb(255, 255, 255)",
+        "group": "Typography"
+    },
+    "fontColorPercentage": {
+        "type": "colorpicker",
+        "label": "Font color for the percentage",
+        "value": "rgb(255, 255, 255)",
+        "group": "Typography"
+    },
+    "fontColorDivider": {
+        "type": "colorpicker",
+        "label": "Font color for the divider",
+        "value": "rgb(255, 255, 255)",
+        "group": "Typography"
+    },
+    "textShadowColor": {
+        "type": "colorpicker",
+        "label": "Text shadow",
+        "value": "rgb(0, 0, 0)",
+        "group": "Typography"
+    },
+    "textShadowWidth": {
+        "type": "number",
+        "label": "Text shadow width",
+        "value": 1,
+        "group": "Typography"
+    },
+    "goal": {
+        "type": "number",
+        "label": "Set a goal",
+        "value": 0,
+        "min": 0,
+        "group": "Goal settings"
+    },
+    "displayGoalCurrency": {
+        "type": "text",
+        "label": "Shown goal currency",
+        "value": "$",
+        "group": "Goal settings"
+    },
+    "showRemainingValueInstead": {
+        "type": "checkbox",
+        "label": "Show the remaining value on the goal instead of the reached and goal value",
+        "value": false,
+        "group": "Goal settings"
+    },
+    "showPercentageOfFulfillment": {
+        "type": "checkbox",
+        "label": "Show the percentage of the goal fulfillment",
+        "value": true,
+        "group": "Goal settings"
+    },
+    "displayGoalAndReachedDivider": {
+        "type": "text",
+        "label": "Divider for reached and goal",
+        "value": "/",
+        "group": "Goal settings"
+    },
+    "displayGoalText": {
+        "type": "text",
+        "label": "Goal description",
+        "value": "Goal",
+        "group": "Goal settings"
+    },
+    "displayRemainingText": {
+        "type": "text",
+        "label": "Text before the remaining value",
+        "value": "Remaining",
+        "group": "Goal settings"
+    },
+    "displayStartingImg": {
+        "type": "image-input",
+        "label": "Image at the beginning of the line",
+        "value": "",
+        "group": "Goal settings"
+    },
+    "goalFinishedSound": {
+        "type": "sound-input",
+        "label": "Sound that should be played when the goal is reached",
+        "value": "",
+        "group": "Goal settings"
+    },
+    "goalFinishedSoundVolume": {
+        "type": "slider",
+        "label": "Alert sound volume",
+        "min": 0,
+        "max": 100,
+        "value": 50,
+        "group": "Goal settings"
+    },
+    "goalChangeFinishedColor": {
+        "type": "checkbox",
+        "label": "Should the background color of the line change when the goal is reached",
+        "value": true,
+        "group": "Goal settings"
+    },
+    "goalFinishedColor": {
+        "type": "colorpicker",
+        "label": "Color for fulfilled goal",
+        "value": "rgb(0, 0, 0)",
+        "group": "Goal settings"
+    },
+    "countCheers": {
+        "type": "checkbox",
+        "label": "Should BIT cheers count toward the goal",
+        "value": true,
+        "group": "BITS"
+    },
+    "bitValue": {
+        "type": "number",
+        "label": "BIT value",
+        "value": 0.01,
+        "min": 0,
+        "group": "BITS"
+    },
+    "countSub": {
+        "type": "checkbox",
+        "label": "Should subscriptions count toward the goal",
+        "value": true,
+        "group": "Subs"
+    },
+    "subValue": {
+        "type": "number",
+        "label": "Sub value in %",
+        "value": 50,
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "group": "Subs"
+    },
+    "useSubBuyValue": {
+        "type": "number",
+        "label": "The buy value of one sub (temporary solution)",
+        "value": 5.99,
+        "min": 0,
+        "group": "Subs"
+    },
+    "countTips": {
+        "type": "checkbox",
+        "label": "Should tips count toward the goal",
+        "value": true,
+        "group": "Donations"
+    },
+    "countSuperchats": {
+        "type": "checkbox",
+        "label": "Should superchats count toward the goal",
+        "value": false,
+        "group": "Donations"
+    }
+}
