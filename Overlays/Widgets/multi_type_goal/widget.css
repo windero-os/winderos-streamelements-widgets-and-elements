@@ -1,4 +1,4 @@
-* {
+body {
     font-family: {{googleFontFamily}};
     font-weight: {{googleFontFamilyWeight}};
     font-size: {{fontSize}}px;

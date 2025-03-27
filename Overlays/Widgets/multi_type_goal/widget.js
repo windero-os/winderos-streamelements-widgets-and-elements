@@ -1,4 +1,5 @@
 let displayPercentage = false,
+    hideCounter = false,
     showRemaining = false,
     displayGoalText = 'Goal',
     countCheers = true,
@@ -16,6 +17,7 @@ let displayPercentage = false,
     sessionData = undefined,
     goalFinishedSound = undefined,
     goalChangeFinishedColor = true,
+    customFontFamily = '',
     storeSavedValues = {
         lastGoalOverflow: 0,
         manualInput: 0,
@@ -86,6 +88,12 @@ window.addEventListener('onWidgetLoad', async function (obj) {
         goalFinishedSound.volume = fieldData.goalFinishedSoundVolume / 100;
     }
     displayStartingImg = fieldData.displayStartingImg;
+    hideCounter = fieldData.hideMTGCounter;
+    customFontFamily = fieldData.customFontFamily;
+
+    if (customFontFamily !== '') {
+        customFontLoad();
+    }
 
     sessionData = obj['detail']['session']['data'];
     updateDisplay();
@@ -119,7 +127,22 @@ function calcReachedValue() {
     return +reachedValue.toFixed(2);
 }
 
+async function customFontLoad() {
+    const customFont = new FontFace(customFontFamily, 'local(' + customFontFamily + ')');
+    try {
+        await customFont.load();
+        document.fonts.add(customFont);
+        document.body.style.fontFamily = customFontFamily;
+    } catch (e) {
+        console.error(e);
+    }
+}
+
 function updateDisplay() {
+    if (hideCounter) {
+        const counter = document.getElementById('multi-type-goal__main-container');
+        counter.classList.add('hidden');
+    }
     const percentageDisplay = document.getElementById('percentage-display-outside');
     const remainingDisplay = document.getElementById('goal-remaining-display');
     const goalReachedDisplay = document.getElementById('goal-reached-display');
@@ -127,18 +150,15 @@ function updateDisplay() {
 
     let displayedValue = calcReachedValue();
     if (showRemaining) {
-        remainingDisplay.classList.remove('hidden');
         goalReachedDisplay.classList.add('hidden');
         displayedValue = Math.max(goal - displayedValue, 0);
         remainingDisplay.children[0].innerHTML = displayedValue + ' ' + displayGoalCurrency;
     } else {
-        goalReachedDisplay.classList.remove('hidden');
         remainingDisplay.classList.add('hidden');
         goalReachedDisplay.children[0].innerHTML = displayedValue;
     }
     if (displayPercentage && goal !== 0) {
         const percentage = +((displayedValue / goal) * 100).toFixed(2);
-        percentageDisplay.classList.remove('hidden');
         percentageDisplay.children[0].innerHTML = percentage + '%';
     } else {
         percentageDisplay.classList.add('hidden');
