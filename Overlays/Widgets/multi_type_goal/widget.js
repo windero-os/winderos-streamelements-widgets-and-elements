@@ -18,6 +18,14 @@ let displayPercentage = false,
     goalFinishedSound = undefined,
     goalChangeFinishedColor = true,
     customFontFamily = '',
+    additionalUsers = [],
+    chatCommands = {
+        hideMTGCounter: '',
+        manualInput: '',
+        resetManualInput: '',
+        manualApplyOverflow: '',
+        manualClearOverflow: '',
+    },
     storeSavedValues = {
         lastGoalOverflow: 0,
         manualInput: 0,
@@ -26,47 +34,41 @@ let displayPercentage = false,
 const storeKey = 'multi_type_goal_store';
 
 window.addEventListener('onEventReceived', function (obj) {
-    if (obj.detail.event.listener === 'widget-button') {
-        if (obj.detail.event.field === 'manualButton') {
-            handleManualInput();
-            updateDisplay();
-        } else if (obj.detail.event.field === 'manualOverflowButton') {
-            handleApplyOverflow();
-            updateDisplay();
-        } else if (obj.detail.event.field === 'resetManualInputButton') {
-            handleResetManualInput();
-            updateDisplay();
-        } else if (obj.detail.event.field === 'manualClearOverflowButton') {
-            handleRemoveOverflow();
-            updateDisplay();
-        } else if (obj.detail.event.field === 'manualClearStoreButton') {
-            storeSavedValues = {
-                lastGoalOverflow: 0,
-                manualInput: 0,
-            };
-            saveInStore();
-            updateDisplay();
-        }
+    const listener = obj.detail.listener;
+    const event = obj.detail.event;
+    // handle the manual buttons
+    if (listener === 'test') {
+        handleManualButtons(event);
+    }
+    // handle chat commands
+    else if (listener === 'message') {
+        handleChatCommands(event);
     }
 });
 
 window.addEventListener('onSessionUpdate', function (obj) {
-    sessionData = obj['detail']['session'];
-    console.log('Saved Values in ', storeKey, storeSavedValues);
+    // When session data changes handle the update of the goal
+    sessionData = obj.detail.session;
     updateDisplay();
 });
 
 window.addEventListener('onWidgetLoad', async function (obj) {
+    //load the store value
     let storeValue;
     try {
         storeValue = await SE_API.store.get(storeKey);
     } catch (e) {}
     if (storeValue === undefined || storeValue === null) {
         SE_API.store.set(storeKey, storeSavedValues);
-    } else {
+    } else if (isNaN(storeValue.lastGoalOverflow) || isNaN(storeValue.manualInput)) {
         storeSavedValues = storeValue;
+    } else {
+        storeSavedValues = {
+            lastGoalOverflow: +storeValue.lastGoalOverflow,
+            manualInput: +storeValue.manualInput,
+        };
     }
-    console.log('Saved Values in ', storeKey, storeSavedValues);
+    //load setting values
     const fieldData = obj.detail.fieldData;
     displayPercentage = fieldData.showPercentageOfFulfillment;
     showRemaining = fieldData.showRemainingValueInstead;
@@ -90,12 +92,29 @@ window.addEventListener('onWidgetLoad', async function (obj) {
     displayStartingImg = fieldData.displayStartingImg;
     hideCounter = fieldData.hideMTGCounter;
     customFontFamily = fieldData.customFontFamily;
+    chatCommands = {
+        hideMTGCounter: fieldData.hideMTGCounterChat,
+        manualInput: fieldData.manualInputChat,
+        resetManualInput: fieldData.resetManualInputChat,
+        manualApplyOverflow: fieldData.manualAddOverflowChat,
+        manualClearOverflow: fieldData.manualClearOverflowChat,
+    };
+
+    // Split the additionaluser list into an array of single user names.
+    if (fieldData.additionalUsers !== '') {
+        if (fieldData.additionalUsers.includes(',')) {
+            additionalUsers = fieldData.additionalUsers.split(',');
+            additionalUsers = additionalUsers.map((element) => element.trim()).filter((element) => element.length > 0);
+        } else {
+            additionalUsers = [fieldData.additionalUsers.trim()];
+        }
+    }
 
     if (customFontFamily !== '') {
         customFontLoad();
     }
 
-    sessionData = obj['detail']['session']['data'];
+    sessionData = obj.detail.session.data;
     updateDisplay();
 });
 
@@ -139,9 +158,11 @@ async function customFontLoad() {
 }
 
 function updateDisplay() {
+    const counter = document.getElementById('multi-type-goal__main-container');
     if (hideCounter) {
-        const counter = document.getElementById('multi-type-goal__main-container');
         counter.classList.add('hidden');
+    } else {
+        counter.classList.remove('hidden');
     }
     const percentageDisplay = document.getElementById('percentage-display-outside');
     const remainingDisplay = document.getElementById('goal-remaining-display');
@@ -152,10 +173,10 @@ function updateDisplay() {
     if (showRemaining) {
         goalReachedDisplay.classList.add('hidden');
         displayedValue = Math.max(goal - displayedValue, 0);
-        remainingDisplay.children[0].innerHTML = displayedValue + ' ' + displayGoalCurrency;
+        remainingDisplay.children[0].innerHTML = displayedValue.toFixed(2) + ' ' + displayGoalCurrency;
     } else {
         remainingDisplay.classList.add('hidden');
-        goalReachedDisplay.children[0].innerHTML = displayedValue;
+        goalReachedDisplay.children[0].innerHTML = displayedValue.toFixed(2);
     }
     if (displayPercentage && goal !== 0) {
         const percentage = +((displayedValue / goal) * 100).toFixed(2);
@@ -172,7 +193,6 @@ function updateDisplay() {
 
 function saveInStore() {
     SE_API.store.set(storeKey, storeSavedValues);
-    console.log('Saved Values in ', storeKey, storeSavedValues);
 }
 
 function handleGoalReached(reachedValue) {
@@ -187,8 +207,8 @@ function handleGoalReached(reachedValue) {
     saveInStore();
 }
 
-function handleManualInput() {
-    if (manualInput === 0) {
+function handleManualInput(inputToAdd) {
+    if (inputToAdd === 0) {
         return;
     }
     if (!storeSavedValues.manualInput) {
@@ -196,7 +216,7 @@ function handleManualInput() {
     }
     storeSavedValues = {
         ...storeSavedValues,
-        manualInput: storeSavedValues.manualInput + manualInput,
+        manualInput: storeSavedValues.manualInput + inputToAdd,
     };
     saveInStore();
 }
@@ -235,4 +255,70 @@ function handleRemoveOverflow() {
         lastGoalOverflow: 0,
     };
     saveInStore();
+}
+
+function handleManualButtons(event) {
+    if (event.listener === 'widget-button') {
+        if (event.field === 'manualButton') {
+            handleManualInput(+manualInput);
+            updateDisplay();
+        } else if (event.field === 'manualOverflowButton') {
+            handleApplyOverflow();
+            updateDisplay();
+        } else if (event.field === 'resetManualInputButton') {
+            handleResetManualInput();
+            updateDisplay();
+        } else if (event.field === 'manualClearOverflowButton') {
+            handleRemoveOverflow();
+            updateDisplay();
+        } else if (obj.detail.event.field === 'manualClearStoreButton') {
+            storeSavedValues = {
+                lastGoalOverflow: 0,
+                manualInput: 0,
+            };
+            saveInStore();
+            updateDisplay();
+        }
+    }
+}
+
+function handleChatCommands(event) {
+    const { text, nick, tags, channel } = event.data;
+    const userstate = {
+        mod: parseInt(tags.mod),
+        sub: parseInt(tags.subscriber),
+        vip: tags.badges.indexOf('vip') !== -1,
+        badges: {
+            broadcaster: nick === channel,
+        },
+    };
+    // filter out messages from users not allowed to manipulate the goal
+    if (
+        !(
+            (userstate.mod && fieldData['managePermissions'] === 'mods') ||
+            userstate.badges.broadcaster ||
+            fieldData.additionalUsers.includes(nick.toLowerCase())
+        ) ||
+        text === ''
+    ) {
+        return;
+    }
+    if (text === chatCommands.hideMTGCounter) {
+        hideCounter = !hideCounter;
+        updateDisplay();
+    } else if (text.startsWith(chatCommands.manualInput)) {
+        const messageInputValue = text.split(' ')[1];
+        if (!isNaN(messageInputValue)) {
+            handleManualInput(+messageInputValue);
+        }
+    } else if (text === chatCommands.resetManualInput) {
+        handleResetManualInput();
+        updateDisplay();
+    } else if (text === chatCommands.manualApplyOverflow) {
+        handleApplyOverflow();
+        updateDisplay();
+    } else if (text === chatCommands.manualClearOverflow) {
+        handleRemoveOverflow();
+        updateDisplay();
+    }
 }

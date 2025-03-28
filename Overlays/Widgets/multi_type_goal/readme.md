@@ -15,6 +15,24 @@ This Widget uses the data from the session settings to count the tips, superchat
 
 ## Setting information
 
+### Goal settings
+
+A goal can be displayed in two ways.
+
+1. current / goal
+2. remaining
+
+Both options can display also a percentage value. For format 1 it is the fullfilment percentage so 10% you reached 10% of the goal. For format 2 it is the remaining percentage. So here 10% would mean, that 10% of the goal remain.
+
+If you want to hide the goal but not delete the widget from the overlay. you can activate the "Hide the goal" option.
+
+The leading image is a small image in front of the row.
+
+Last you can add here options for when the goal is reached.
+
+1. Play a sound when the goal is reached (Optional)
+2. Change the background color of the goal line
+
 ### Manual management
 
 In this setting group you can do a few manual changes to the goal counter.
@@ -27,25 +45,20 @@ In this setting group you can do a few manual changes to the goal counter.
 5. Reset the saved data for widget: Resets the SE_API.store key to only hold the values
    of the active version. Also resets all values to 0
 
+### Chat command settings
+
+In this setting group we have the chat commands that can be used to instead of the manual managment buttons. These chat commands can be individualized but should never contain a space as part of the command since the space is used to split the command from the value.
+
+Also an command for a quick hide option is given. This will be overwritten when you change something in the widget settings, since it will only be saved in the active widget.
+
+In case of the manual input add the value that should be added after the command separated by one space.
+
+Also there is the option to allow other people to execute the commands.
+Here you can either change it to allow also mods or you can add a comma sepearated list of the usernames that should be able to do it.
+
 ### Typography
 
 Set the font family, size and colors of the displayed text.
-
-### Goal settings
-
-A goal can be displayed in two ways.
-
-1. current / goal
-2. remaining
-
-Both options can display also a percentage value. For format 1 it is the fullfilment percentage so 10% you reached 10% of the goal. For format 2 it is the remaining percentage. So here 10% would mean, that 10% of the goal remain.
-
-The leading image is a small image in front of the row.
-
-Last you can add here options for when the goal is reached.
-
-1. Play a sound when the goal is reached (Optional)
-2. Change the background color of the goal line
 
 ### BITs
 

@@ -1,7 +1,7 @@
 {
     "hideMTGCounter": {
         "type": "checkbox",
-        "label": "Hide the counter",
+        "label": "Hide the goal",
         "value": false,
         "group": "Goal settings"
     },
@@ -115,6 +115,53 @@
         "label": "Reset the saved data for widget",
         "value": "manualClearStoreButton",
         "group": "Manual management"
+    },
+    "managePermissions": {
+        "type": "dropdown",
+        "label": "Who can manage the goal",
+        "value": "streamer",
+        "options": {
+            "streamer": "Streamer",
+            "mods": "Mods"
+        },
+        "group": "Chat command settings"
+    },
+    "additionalUsers": {
+        "type": "text",
+        "label": "Additional users, comma separated",
+        "value": "",
+        "group": "Chat command settings"
+    },
+    "hideMTGCounterChat": {
+        "type": "text",
+        "label": "Chat command to hide counter",
+        "value": "!hideMTGCounter",
+        "group": "Chat command settings"
+    },
+    "manualInputChat": {
+        "type": "text",
+        "label": "Chat command for the manual input",
+        "value": "!manualMTGValueInput",
+        "group": "Chat command settings"
+    },
+    "resetManualInputChat": {
+        "type": "text",
+        "label": "Chat command for the manual input",
+        "value": "!resetManualMTGValueInput",
+        "group": "Chat command settings"
+    },
+    "manualAddOverflowChat": {
+        "type": "text",
+        "label": "Chat command for the manual input",
+        "hint": "Amount split with a space",
+        "value": "!manualOverflowInput",
+        "group": "Chat command settings"
+    },
+    "manualClearOverflowChat": {
+        "type": "text",
+        "label": "Chat command for the manual input",
+        "value": "!manualClearOverflowInput",
+        "group": "Chat command settings"
     },
     "googleFontFamily": {
         "type": "googleFont",
