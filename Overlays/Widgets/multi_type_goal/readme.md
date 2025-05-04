@@ -8,10 +8,13 @@ At the moment the following types of goals can be combined with this widget:
 2. Twitch BITS (limited)
 3. Youtube Superchats
 4. Twitch subscriptions (limited)
+5. Youtube memberships (limited)
 
 They can be activated in the settings under the corresponding group.
 
 This Widget uses the data from the session settings to count the tips, superchats, subscriptions and cheers. So if something does not count to those values in the session settings it will not be included in the counter. At the same time everything that counts to one of these goals will be counted the same way as any other contribution from that goal group not considering what the real value of that contribution was.
+
+The forced split in overlays between Youtube and Twitch mean the count between the platforms is not working as far as I have seen.
 
 ## Setting information
 
@@ -73,6 +76,12 @@ For a future update I will look into adding an option for counting redeemed BITs
 Limited:
 With subs is at the moment the problem, that I did not find an easy way to get the value of each subscription since the prices for a subscription depends on a regional price of the user and an discount if you gift more than 5 subs. (This will be a point I will look into for a future update of the widget).
 At the moment there are settings for your split of subs and with what buy value you want the subs to be calculated for the goal. (The default is the price for one sub in the USA.)
+
+### Memberships
+
+Limited:
+With memberships is at the moment the problem, that I did not find an easy way to get the value of each memberships since the prices for a memberships depends on a regional price of the user. (This will be a point I will look into for a future update of the widget).
+At the moment there are settings for your split of memberships and with what buy value you want the memberships to be calculated for the goal.
 
 ### Donations
 

@@ -4,7 +4,9 @@ let displayPercentage = false,
     displayGoalText = 'Goal',
     countCheers = true,
     countSub = true,
+    countMember = true,
     subValue = 50,
+    memberValue = 50,
     bitValue = 0.01,
     countTips = true,
     countSuperchats = false,
@@ -12,6 +14,7 @@ let displayPercentage = false,
     displayRemainingText = 'Remaining',
     goal = 0,
     useSubBuyValue = 0,
+    useMemberBuyValue = 0,
     manualInput = 0,
     displayStartingImg = '',
     sessionData = undefined,
@@ -76,13 +79,16 @@ window.addEventListener('onWidgetLoad', async function (obj) {
     countCheers = fieldData.countCheers;
     bitValue = fieldData.bitValue;
     countSub = fieldData.countSub;
+    countMember = fieldData.countMember;
     subValue = fieldData.subValue;
+    memberValue = fieldData.memberValue;
     countTips = fieldData.countTips;
     countSuperchats = fieldData.countSuperchats;
     displayGoalCurrency = fieldData.displayGoalCurrency;
     displayRemainingText = fieldData.displayRemainingText;
     goal = fieldData.goal;
     useSubBuyValue = fieldData.useSubBuyValue;
+    useMemberBuyValue = fieldData.useMemberBuyValue;
     manualInput = fieldData.manualInput;
     goalChangeFinishedColor = fieldData.goalChangeFinishedColor;
     if (fieldData.goalFinishedSound) {
@@ -124,16 +130,29 @@ function calcReachedValue() {
     }
     let reachedValue = storeSavedValues.manualInput;
     if (countTips) {
-        reachedValue += sessionData['tip-goal']['amount'] || 0;
+        try {
+            reachedValue += sessionData['tip-goal']['amount'] || 0;
+        } catch (e) {}
     }
     if (countSub) {
-        reachedValue += +(sessionData['subscriber-goal']['amount'] * useSubBuyValue * (subValue / 100)).toFixed(2) || 0;
+        try {
+            reachedValue += +(sessionData['subscriber-goal']['amount'] * useSubBuyValue * (subValue / 100)).toFixed(2) || 0;
+        } catch (e) {}
     }
     if (countCheers) {
-        reachedValue += +(sessionData['cheer-goal']['amount'] * bitValue).toFixed(2) || 0;
+        try {
+            reachedValue += +(sessionData['cheer-goal']['amount'] * bitValue).toFixed(2) || 0;
+        } catch (e) {}
     }
     if (countSuperchats) {
-        reachedValue += +(sessionData['superchat-goal']['amount'] * 0.7).toFixed(2) || 0;
+        try {
+            reachedValue += +(sessionData['superchat-goal']['amount'] * 0.7).toFixed(2) || 0;
+        } catch (e) {}
+    }
+    if (countMember) {
+        try {
+            reachedValue += +(sessionData['sponsor-goal']['amount'] * useMemberBuyValue * (memberValue / 100)).toFixed(2) || 0;
+        } catch (e) {}
     }
     if (reachedValue >= goal) {
         if (goalChangeFinishedColor) {
@@ -158,6 +177,7 @@ async function customFontLoad() {
 }
 
 function updateDisplay() {
+    console.log(sessionData);
     const counter = document.getElementById('multi-type-goal__main-container');
     if (hideCounter) {
         counter.classList.add('hidden');

@@ -256,7 +256,7 @@
     },
     "countSub": {
         "type": "checkbox",
-        "label": "Should subscriptions count toward the goal",
+        "label": "Should twitch subscriptions count toward the goal",
         "value": true,
         "group": "Subs"
     },
@@ -275,6 +275,28 @@
         "value": 5.99,
         "min": 0,
         "group": "Subs"
+    },
+    "countMember": {
+        "type": "checkbox",
+        "label": "Should Youtube memberships count toward the goal",
+        "value": false,
+        "group": "Memberships"
+    },
+    "memberValue": {
+        "type": "number",
+        "label": "Membership value in %",
+        "value": 50,
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "group": "Memberships"
+    },
+    "useMemberBuyValue": {
+        "type": "number",
+        "label": "The buy value of one membership (temporary solution)",
+        "value": 5.99,
+        "min": 0,
+        "group": "Memberships"
     },
     "countTips": {
         "type": "checkbox",
